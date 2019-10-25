@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dgpalife.emailcollection.mapper.NumberMapper">
+  <resultMap id="BaseResultMap" type="com.dgpalife.emailcollection.model.Number">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="ParentDepartment" jdbcType="VARCHAR" property="parentdepartment" />
+    <result column="Department" jdbcType="VARCHAR" property="department" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="ContactName" jdbcType="VARCHAR" property="contactname" />
+    <result column="Contact" jdbcType="BIGINT" property="contact" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, ParentDepartment, Department,telephone,email, ContactName, Contact
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_number
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_number
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.dgpalife.emailcollection.model.Number">
+    insert into t_number (id, ParentDepartment, Department, telephone,email,
+      ContactName, Contact)
+    values (#{id,jdbcType=BIGINT}, #{parentdepartment,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{department,jdbcType=VARCHAR},
+      #{contactname,jdbcType=VARCHAR}, #{contact,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dgpalife.emailcollection.model.Number">
+    insert into t_number
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="parentdepartment != null">
+        ParentDepartment,
+      </if>
+      <if test="department != null">
+        Department,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="contactname != null">
+        ContactName,
+      </if>
+      <if test="contact != null">
+        Contact,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="parentdepartment != null">
+        #{parentdepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contactname != null">
+        #{contactname,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        #{contact,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dgpalife.emailcollection.model.Number">
+    update t_number
+    <set>
+      <if test="parentdepartment != null">
+        ParentDepartment = #{parentdepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        Department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone =  #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email =  #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contactname != null">
+        ContactName = #{contactname,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null">
+        Contact = #{contact,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dgpalife.emailcollection.model.Number">
+    update t_number
+    set ParentDepartment = #{parentdepartment,jdbcType=VARCHAR},
+      Department = #{department,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      ContactName = #{contactname,jdbcType=VARCHAR},
+      Contact = #{contact,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectNumberList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_number
+    <where>
+      <if test="queryText != null">
+        telephone like concat("%",#{queryText},"%")
+      </if>
+    </where>
+    limit #{startline}, #{pagesize}
+  </select>
+
+  <select id="selectCount" resultType="java.lang.Integer">
+    select count(id) from t_number
+    <where>
+      <if test="queryText!=null">
+        telephone like concat("%",#{queryText},"%")
+      </if>
+    </where>
+  </select>
+</mapper>
