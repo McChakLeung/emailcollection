@@ -13,4 +13,6 @@ public interface NumberService {
     Integer updateNumber(Number number);
 
     Integer saveNumber(Number number);
+
+    void deleteNumberById(Long id);
 }

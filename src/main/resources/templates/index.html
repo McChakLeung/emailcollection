@@ -38,11 +38,24 @@
                     <form class="form-inline" role="form" style="float:left;" >
                         <div class="form-group has-feedback">
                             <div class="input-group">
-                                <div class="input-group-addon">查询条件</div>
-                                <input id="fqueryText" class="form-control has-success" type="text" placeholder="请输入电话号码">
+                                <div class="input-group-addon">查询营业区</div>
+                                <input id="fparentdepartment" class="form-control has-success" type="text" value=""  placeholder="请输入营业区">
                             </div>
                         </div>
-                        <button id="queryBtn" type="button" class="btn btn-warning" ><i class="glyphicon glyphicon-search"></i> 查询</button>
+                        <div class="form-group has-feedback">
+                            <div class="input-group">
+                                <div class="input-group-addon">查询营业部</div>
+                                <input id="fdepartment" class="form-control has-success" type="text" placeholder="请输入营业部">
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <div class="input-group">
+                                <div class="input-group-addon">查询电话号码</div>
+                                <input id="ftelephone" class="form-control has-success" type="text" placeholder="请输入电话号码">
+                            </div>
+                        </div>
+                        <button id="queryBtn" type="button" class="btn btn-warning" ><i class="glyphicon glyphicon-search"></i> 按条件查询</button>
+                        <button id="clearBtn" type="button" class="btn btn-success" ><i class="glyphicon glyphicon-search"></i> 清空条件查询</button>
                     </form>
                     <button type="button" class="btn btn-primary" style="float:right;" id="addBtn"><i class="glyphicon glyphicon-plus"></i> 新增</button>
                     <!--<button type="button" id="deleteBatch" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>-->
@@ -102,7 +115,13 @@
             "pageno":1,
             "pagesize":10
         };
-
+        //
+        // var searchParms = {
+        //     "parentdepartment": "1",
+        //     "department": "1",
+        //     "telephone": "1"
+        // };
+        // console.log(searchParms)
         //异步查询数据页
         function queryPageUser(pageno) {
             jsonObj.pageno = pageno;
@@ -111,6 +130,7 @@
                 url:"[[@{|/index|}]]",
                 data:jsonObj,
                 dataType: "json",
+                // contentType : "application/json;charset=utf-8",
                 beforeSend:function () {
                     loadingIndex = layer.load(3, {time: 10*1000});
                     return true;
@@ -141,7 +161,7 @@
                             content+='  <td>';
                             content+='	  <button type="button" class="btn btn-primary btn-xs" onclick="toUpdate('+n.id+')"><i class=" glyphicon glyphicon-pencil"></i></button>';
                             // content+='	  <button type="button" class="btn btn-warning btn-xs" onclick="startup('+n.id+')"><i class=" glyphicon glyphicon-remove"></i></button>';
-                            //content+='	  <button type="button" class="btn btn-danger btn-xs" onclick="deleteUser('+n.id+')"><i class=" glyphicon glyphicon-trash"></i></button>';
+                            content+='	  <button type="button" class="btn btn-danger btn-xs" onclick="deleteNumber('+n.id+')"><i class=" glyphicon glyphicon-trash"></i></button>';
                             content+='  </td>';
                             content+='</tr>';
                         });
@@ -178,8 +198,9 @@
 
         //模糊查询函数调用
         $("#queryBtn").click(function () {
-            var queryText = $("#fqueryText").val();
-            jsonObj.queryText = queryText;
+            jsonObj.parentdepartment = $("#fparentdepartment").val();
+            jsonObj.department = $("#fdepartment").val();
+            jsonObj.telephone = $("#ftelephone").val();
             queryPageUser(1);
         });
 
@@ -192,29 +213,30 @@
         }
 
 
-        // function deleteUser(id) {
-        //     layer.confirm("确定要删除【"+username+"】用户吗？",  {icon: 3, title:'提示'}, function(cindex){
-        //         layer.close(cindex);
-        //         $.ajax({
-        //             type:"post",
-        //             url:"[[@{|/auth/user/doDelete|}]]",
-        //             data:{
-        //                 "id":id
-        //             },
-        //             success:function (result) {
-        //                 if(result.success){
-        //                     window.location.href='[[@{|/auth/user/toIndex|}]]';
-        //                 }else{
-        //                     layer.msg(result.message,{time:2000, icon:5, shift:5});
-        //                 }
-        //             }
-        //
-        //         });
-        //
-        //     }, function(cindex){
-        //         layer.close(cindex);
-        //     });
-        // }
+        function deleteNumber(id) {
+            layer.confirm("确定要删除这条记录吗？",  {icon: 3, title:'提示'}, function(cindex){
+                layer.close(cindex);
+                $.ajax({
+                    type:"post",
+                    url:"[[@{|/doDelete|}]]",
+                    data:{
+                        "id":id
+                    },
+                    success:function (result) {
+                        if(result.success){
+                            layer.close(loadingIndex);
+                            queryPageUser(1);
+                        }else{
+                            layer.msg(result.message,{time:2000, icon:5, shift:5});
+                        }
+                    }
+
+                });
+
+            }, function(cindex){
+                layer.close(cindex);
+            });
+        }
 
 
     </script>

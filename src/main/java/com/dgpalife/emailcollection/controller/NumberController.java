@@ -5,6 +5,7 @@ import com.dgpalife.emailcollection.common.Page;
 import com.dgpalife.emailcollection.common.StringUtil;
 import com.dgpalife.emailcollection.model.Number;
 import com.dgpalife.emailcollection.service.NumberService;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 @Controller
 //@RequestMapping("/")
-public class BasicController {
+public class NumberController {
 
     @Autowired
     private NumberService numberService;
@@ -33,7 +34,9 @@ public class BasicController {
     @RequestMapping("/index")
     public Object toIndex(@RequestParam(value = "pageno",required = false,defaultValue = "1") Integer pageno,
                           @RequestParam(value = "pagesize",required = false,defaultValue = "10") Integer pagesize,
-                          String queryText){
+                          @RequestParam(value = "parentdepartment",required = false) String parentdepartment,
+                          @RequestParam(value = "department",required = false) String department,
+                          @RequestParam(value = "telephone",required = false) String telephone){
 
         AjaxResult result = new AjaxResult();
 
@@ -41,12 +44,27 @@ public class BasicController {
             Map<String,Object> params = new HashMap<>();
             params.put("pageno",pageno);
             params.put("pagesize",pagesize);
-            if(StringUtil.isNotEmpty(queryText)){
-                if(queryText.contains("%")){
-                    queryText = queryText.replaceAll("%", "\\\\%");
-                }
-                params.put("queryText", queryText); //   \%
-            }
+            params.put("parentdepartment", parentdepartment);
+            params.put("department", department);
+            params.put("telephone", telephone);
+//            if(StringUtil.isNotEmpty(parentdepartment)){
+//                if(parentdepartment.contains("%")){
+//                    parentdepartment = parentdepartment.replaceAll("%", "\\\\%");
+//                }
+//                params.put("parentdepartment", parentdepartment); //   \%
+//            }
+//            if(StringUtil.isNotEmpty(department)){
+//                if(department.contains("%")){
+//                    department = department.replaceAll("%", "\\\\%");
+//                }
+//                params.put("department", department); //   \%
+//            }
+//            if(StringUtil.isNotEmpty(telephone)){
+//                if(telephone.contains("%")){
+//                    telephone = telephone.replaceAll("%", "\\\\%");
+//                }
+//                params.put("telephone", telephone); //   \%
+//            }
             Page<Number> page = numberService.selectNumberList(params);
             if(page == null){
                 result.setSuccess(false);
@@ -105,6 +123,23 @@ public class BasicController {
         }catch (Exception e){
             result.setSuccess(false);
             result.setMessage("保存异常，请联系管理员处理");
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @ResponseBody
+    @RequestMapping("/doDelete")
+    public Object doDelete(Long id){
+
+        AjaxResult result = new AjaxResult();
+
+        try{
+            numberService.deleteNumberById(id);
+            result.setSuccess(true);
+        }catch (Exception e){
+            result.setSuccess(false);
+            result.setMessage("删除异常，请联系管理员处理");
             e.printStackTrace();
         }
         return result;

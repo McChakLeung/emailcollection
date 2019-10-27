@@ -46,4 +46,9 @@ public class NumberServiceImpl implements NumberService {
     public Integer saveNumber(Number number) {
         return numberMapper.insertSelective(number);
     }
+
+    @Override
+    public void deleteNumberById(Long id) {
+        numberMapper.deleteByPrimaryKey(id);
+    }
 }

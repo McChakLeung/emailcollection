@@ -117,8 +117,14 @@
     select <include refid="Base_Column_List" />
     from t_number
     <where>
-      <if test="queryText != null">
-        telephone like concat("%",#{queryText},"%")
+      <if test="parentdepartment != null and parentdepartment != ''">
+        ParentDepartment = #{parentdepartment}
+      </if>
+      <if test="department != null and department != ''">
+        AND Department = #{department}
+      </if>
+      <if test="telephone != null and telephone != ''">
+        AND telephone = #{telephone}
       </if>
     </where>
     limit #{startline}, #{pagesize}
@@ -126,10 +132,16 @@
 
   <select id="selectCount" resultType="java.lang.Integer">
     select count(id) from t_number
-    <where>
-      <if test="queryText!=null">
-        telephone like concat("%",#{queryText},"%")
-      </if>
-    </where>
+      <where>
+          <if test="parentdepartment != null and parentdepartment != ''">
+            ParentDepartment = #{parentdepartment}
+          </if>
+          <if test="department != null and department != ''">
+            AND Department = #{department}
+          </if>
+          <if test="telephone != null and telephone != ''">
+            AND telephone = #{telephone}
+          </if>
+      </where>
   </select>
 </mapper>
