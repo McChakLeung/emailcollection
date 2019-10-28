@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <button id="queryBtn" type="button" class="btn btn-warning" ><i class="glyphicon glyphicon-search"></i> 按条件查询</button>
-                        <button id="clearBtn" type="button" class="btn btn-success" ><i class="glyphicon glyphicon-search"></i> 清空条件查询</button>
+                        <!--<button id="clearBtn" type="button" class="btn btn-success" ><i class="glyphicon glyphicon-search"></i> 清空条件查询</button>-->
                     </form>
                     <button type="button" class="btn btn-primary" style="float:right;" id="addBtn"><i class="glyphicon glyphicon-plus"></i> 新增</button>
                     <!--<button type="button" id="deleteBatch" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>-->
@@ -113,7 +113,7 @@
 
         var jsonObj = {
             "pageno":1,
-            "pagesize":10
+            "pagesize":30
         };
         //
         // var searchParms = {
@@ -203,6 +203,11 @@
             jsonObj.telephone = $("#ftelephone").val();
             queryPageUser(1);
         });
+
+        // $("#clearBtn").click(function () {
+        //     queryPageUser(1);
+        // });
+
 
         $("#addBtn").click(function () {
             window.location.href = '[[@{|/toAdd|}]]';
