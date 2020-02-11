@@ -40,7 +40,7 @@
                         <!-- BASIC TABLE -->
                         <div class="panel">
                             <div class="panel-heading">
-                                <h3 class="panel-title">修改</h3>
+                                <h1 class="panel-title">修改</h1>
                             </div>
                             <div class="panel-body">
                                 <form id="form">
@@ -56,6 +56,10 @@
                                         <label for="ftelephone">电话号码</label>
                                         <input type="text" class="form-control" id="ftelephone" th:value="${number.telephone}"  placeholder="请输入电话号码">
                                     <!--<p class="help-block label label-warning">请输入合法的邮箱地址, 格式为： xxxx@xxxx.com</p>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="foperator">运营商</label>
+                                        <input type="text" class="form-control" id="foperator" th:value="${number.operator}" disabled>
                                     </div>
                                     <div class="form-group">
                                         <label for="femail">发票收取电子邮箱</label>
@@ -98,6 +102,7 @@
     var fparentdepartment = $("#fparentdepartment");
     var fdepartment = $("#fdepartment");
     var ftelephone = $("#ftelephone");
+    // var foperator = $("#foperator");
     var femail = $("#femail");
     var fcontactname = $("#fcontactname");
     var fcontact = $("#fcontact");
@@ -112,6 +117,7 @@
                 parentdepartment:fparentdepartment.val(),
                 department:fdepartment.val(),
                 telephone:ftelephone.val(),
+                // operator:foperator.val(),
                 email:femail.val(),
                 contactname:fcontactname.val(),
                 contact:fcontact.val(),

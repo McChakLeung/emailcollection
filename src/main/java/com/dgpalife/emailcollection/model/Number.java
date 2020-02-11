@@ -31,6 +31,16 @@ public class Number {
 
     private Long contact;
 
+    private String operator;
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
     public Long getId() {
         return id;
     }

@@ -32,37 +32,80 @@
             <!-- BASIC TABLE -->
             <div class="panel">
                 <div class="panel-heading">
-                <h3 class="panel-title">外勤部门电话统计系统</h3>
+                <h1 class="panel-title">外勤部门电话统计系统</h1>
                 </div>
                 <div class="panel-body">
-                    <form class="form-inline" role="form" style="float:left;" >
-                        <div class="form-group has-feedback">
-                            <div class="input-group">
-                                <div class="input-group-addon">查询营业区</div>
+                    <form class="form-horizontal" role="form" >
+                        <div class="form-group">
+                            <label class="col-md-3">筛选条件：</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="foperator" class="col-md-2 control-label">查询运营商：</label>
+                            <div class="col-md-3">
+                                <select class="form-control" id="foperator">
+                                    <option value="电信">电信</option>
+                                    <option value="联通">联通</option>
+                                </select>
+                            </div>
+                            <label for="fparentdepartment" class="col-md-2 control-label">查询营业区：</label>
+                            <div class="col-md-3">
                                 <input id="fparentdepartment" class="form-control has-success" type="text" value=""  placeholder="请输入营业区">
                             </div>
                         </div>
-                        <div class="form-group has-feedback">
-                            <div class="input-group">
-                                <div class="input-group-addon">查询营业部</div>
+                        <div class="form-group">
+                            <label for="fdepartment" class="col-md-2 control-label">查询部门：</label>
+                            <div class="col-md-3">
                                 <input id="fdepartment" class="form-control has-success" type="text" placeholder="请输入营业部">
                             </div>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <div class="input-group">
-                                <div class="input-group-addon">查询电话号码</div>
+                            <label for="ftelephone" class="col-md-2 control-label">查询营业区：</label>
+                            <div class="col-md-3">
                                 <input id="ftelephone" class="form-control has-success" type="text" placeholder="请输入电话号码">
                             </div>
                         </div>
-                        <button id="queryBtn" type="button" class="btn btn-warning" ><i class="glyphicon glyphicon-search"></i> 按条件查询</button>
-                        <button id="clearBtn" type="button" class="btn btn-success" ><i class="glyphicon glyphicon-search"></i> 清空条件查询</button>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button id="queryBtn" type="button" class="btn btn-warning" ><i class="glyphicon glyphicon-search"></i> 按条件查询</button>
+                            </div>
+                        </div>
+                        <!--<div class="form-group has-feedback">-->
+                            <!--<div class="input-group">-->
+                                <!--<div class="input-group-addon">运营商</div>-->
+                                <!--<select class="form-control" id="foperator">-->
+                                    <!--<option value="电信">电信</option>-->
+                                    <!--<option value="联通">联通</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group has-feedback">-->
+                            <!--<div class="input-group">-->
+                                <!--<div class="input-group-addon">查询营业区</div>-->
+                                <!--<input id="fparentdepartment" class="form-control has-success" type="text" value=""  placeholder="请输入营业区">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group has-feedback">-->
+                            <!--<div class="input-group">-->
+                                <!--<div class="input-group-addon">查询营业部</div>-->
+                                <!--<input id="fdepartment" class="form-control has-success" type="text" placeholder="请输入营业部">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group has-feedback">-->
+                            <!--<div class="input-group">-->
+                                <!--<div class="input-group-addon">查询电话号码</div>-->
+                                <!--<input id="ftelephone" class="form-control has-success" type="text" placeholder="请输入电话号码">-->
+                            <!--</div>-->
+                        <!--</div>-->
+
                     </form>
-                    <button type="button" class="btn btn-primary" style="float:right;" id="addBtn"><i class="glyphicon glyphicon-plus"></i> 新增</button>
+                    <!--<button id="clearBtn" type="button" class="btn btn-success" ><i class="glyphicon glyphicon-search"></i> 清空条件查询</button>-->
+
                     <!--<button type="button" id="deleteBatch" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>-->
+                    <!--<hr>-->
+                    <!--<button type="button" class="btn btn-primary" id="addBtn"><i class="glyphicon glyphicon-plus"></i> 新增</button>-->
+                    <div>
+                        <button type="button" id="addBtn" class="btn btn-primary" ><i class="glyphicon glyphicon-plus"></i> 新增</button>
+                    </div>
                     <br>
-                    <hr style="clear:both;">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover">
                             <thead>
                             <tr class="success">
                                 <th>序号</th>
@@ -70,6 +113,7 @@
                                 <th>营业区</th>
                                 <th>营业部</th>
                                 <th>电话号码</th>
+                                <th>运营商</th>
                                 <th>Email地址</th>
                                 <th>联系人</th>
                                 <th>联系电话</th>
@@ -82,7 +126,7 @@
                             </tbody>
                             <tfoot>
                                     <tr >
-                                        <td colspan="8" align="center">
+                                        <td colspan="9" align="center">
                                             <ul class="pagination">
 
                                             </ul>
@@ -91,7 +135,7 @@
 
                             </tfoot>
                         </table>
-                    </div>
+
                 </div>
             </div>
             <!-- END BASIC TABLE -->
@@ -155,6 +199,7 @@
                             content+='  <td>'+n.parentdepartment+'</td>';
                             content+='  <td>'+n.department+'</td>';
                             content+='  <td>'+n.telephone+'</td>';
+                            content+='  <td>'+n.operator+'</td>';
                             content+='  <td>'+n.email+'</td>';
                             content+='  <td>'+n.contactname+'</td>';
                             content+='  <td>'+n.contact+'</td>';
@@ -198,6 +243,7 @@
 
         //模糊查询函数调用
         $("#queryBtn").click(function () {
+            jsonObj.operator = $("#foperator").val();
             jsonObj.parentdepartment = $("#fparentdepartment").val();
             jsonObj.department = $("#fdepartment").val();
             jsonObj.telephone = $("#ftelephone").val();

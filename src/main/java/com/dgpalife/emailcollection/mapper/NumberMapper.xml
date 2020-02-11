@@ -9,9 +9,10 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="ContactName" jdbcType="VARCHAR" property="contactname" />
     <result column="Contact" jdbcType="BIGINT" property="contact" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, ParentDepartment, Department,telephone,email, ContactName, Contact
+    id, ParentDepartment, Department,telephone,email, ContactName, Contact, operator
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -25,9 +26,9 @@
   </delete>
   <insert id="insert" parameterType="com.dgpalife.emailcollection.model.Number">
     insert into t_number (id, ParentDepartment, Department, telephone,email,
-      ContactName, Contact)
+      ContactName, Contact, operator)
     values (#{id,jdbcType=BIGINT}, #{parentdepartment,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{department,jdbcType=VARCHAR},
-      #{contactname,jdbcType=VARCHAR}, #{contact,jdbcType=BIGINT})
+      #{contactname,jdbcType=VARCHAR}, #{contact,jdbcType=BIGINT},#{operator,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dgpalife.emailcollection.model.Number">
     insert into t_number
@@ -53,6 +54,9 @@
       <if test="contact != null">
         Contact,
       </if>
+      <if test="operator != null">
+        operator,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -75,6 +79,9 @@
       </if>
       <if test="contact != null">
         #{contact,jdbcType=BIGINT},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -99,6 +106,9 @@
       <if test="contact != null">
         Contact = #{contact,jdbcType=BIGINT},
       </if>
+      <if test="operator != null">
+        Contact = #{operator,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -110,6 +120,7 @@
       email = #{email,jdbcType=VARCHAR},
       ContactName = #{contactname,jdbcType=VARCHAR},
       Contact = #{contact,jdbcType=BIGINT}
+      operator = #{operator,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 
@@ -117,14 +128,17 @@
     select <include refid="Base_Column_List" />
     from t_number
     <where>
+      <if test="operator != null and operator != ''">
+        operator LIKE concat("%",#{operator},"%")
+      </if>
       <if test="parentdepartment != null and parentdepartment != ''">
-        ParentDepartment = #{parentdepartment}
+        ParentDepartment LIKE concat("%",#{parentdepartment},"%")
       </if>
       <if test="department != null and department != ''">
-        AND Department = #{department}
+        AND Department LIKE concat("%",#{department},"%")
       </if>
       <if test="telephone != null and telephone != ''">
-        AND telephone = #{telephone}
+        AND telephone LIKE concat("%",#{telephone},"%")
       </if>
     </where>
     limit #{startline}, #{pagesize}
@@ -133,14 +147,17 @@
   <select id="selectCount" resultType="java.lang.Integer">
     select count(id) from t_number
       <where>
+          <if test="operator != null and operator != ''">
+            operator LIKE concat("%",#{operator},"%")
+          </if>
           <if test="parentdepartment != null and parentdepartment != ''">
-            ParentDepartment = #{parentdepartment}
+            ParentDepartment LIKE concat("%",#{parentdepartment},"%")
           </if>
           <if test="department != null and department != ''">
-            AND Department = #{department}
+            AND Department LIKE concat("%",#{department},"%")
           </if>
           <if test="telephone != null and telephone != ''">
-            AND telephone = #{telephone}
+            AND telephone LIKE concat("%",#{telephone},"%")
           </if>
       </where>
   </select>
