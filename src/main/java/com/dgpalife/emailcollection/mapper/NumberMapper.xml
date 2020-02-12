@@ -129,10 +129,10 @@
     from t_number
     <where>
       <if test="operator != null and operator != ''">
-        operator LIKE concat("%",#{operator},"%")
+        AND operator LIKE concat("%",#{operator},"%")
       </if>
       <if test="parentdepartment != null and parentdepartment != ''">
-        ParentDepartment LIKE concat("%",#{parentdepartment},"%")
+        AND ParentDepartment LIKE concat("%",#{parentdepartment},"%")
       </if>
       <if test="department != null and department != ''">
         AND Department LIKE concat("%",#{department},"%")
@@ -148,10 +148,10 @@
     select count(id) from t_number
       <where>
           <if test="operator != null and operator != ''">
-            operator LIKE concat("%",#{operator},"%")
+            AND operator LIKE concat("%",#{operator},"%")
           </if>
           <if test="parentdepartment != null and parentdepartment != ''">
-            ParentDepartment LIKE concat("%",#{parentdepartment},"%")
+            AND ParentDepartment LIKE concat("%",#{parentdepartment},"%")
           </if>
           <if test="department != null and department != ''">
             AND Department LIKE concat("%",#{department},"%")
