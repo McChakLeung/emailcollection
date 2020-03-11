@@ -33,7 +33,7 @@ public class NumberController {
     @ResponseBody
     @RequestMapping("/index")
     public Object toIndex(@RequestParam(value = "pageno",required = false,defaultValue = "1") Integer pageno,
-                          @RequestParam(value = "pagesize",required = false,defaultValue = "10") Integer pagesize,
+                          @RequestParam(value = "pagesize",required = false,defaultValue = "20") Integer pagesize,
                           @RequestParam(value = "operator",required = false) String operator,
                           @RequestParam(value = "parentdepartment",required = false) String parentdepartment,
                           @RequestParam(value = "department",required = false) String department,
